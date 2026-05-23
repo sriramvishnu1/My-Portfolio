@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Ram Vishnu Perumal – Technical Writer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --accent: #c0392b;
+    --accent2: #1a3a5c;
+    --muted: #7a7060;
+    --rule: #ccc5b2;
+    --card-bg: #fffdf7;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 4rem 6rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.35s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-left: 3px solid var(--accent2);
+    padding-left: 1rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-summary {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #333;
+    max-width: 520px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.65s forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 0.85rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: #a93226; transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.85rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid var(--ink);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 4rem 4rem 2rem;
+    position: relative;
+  }
+
+  .hero-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    padding: 2rem 1.5rem;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+
+  .stat-card:nth-child(2)::before { background: var(--accent2); }
+  .stat-card:nth-child(3)::before { background: var(--accent2); }
+  .stat-card:nth-child(4)::before { background: var(--accent); }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    bottom: -2rem;
+    right: -1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 12rem;
+    font-weight: 900;
+    color: rgba(0,0,0,0.03);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 6rem 6rem;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+  }
+
+  .section-rule { flex: 1; height: 1px; background: var(--rule); }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* SKILLS SECTION */
+  #skills { background: var(--ink); color: var(--paper); }
+
+  #skills .section-title { color: var(--paper); }
+  #skills .section-num { color: #c0392b; }
+  #skills .section-rule { background: #333; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: #222;
+    border: 1px solid #222;
+  }
+
+  .skill-category {
+    background: #141414;
+    padding: 2rem;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .skill-category:hover { background: #1e1e1e; }
+
+  .skill-cat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .skill-items {
+    font-size: 0.88rem;
+    color: #ccc5b2;
+    line-height: 2;
+  }
+
+  .skill-items span {
+    display: inline-block;
+    background: #222;
+    color: #e8e0d0;
+    padding: 0.15rem 0.6rem;
+    margin: 0.2rem 0.2rem 0.2rem 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+
+  .skill-items span:hover { background: var(--accent); color: white; }
+
+  /* EXPERIENCE */
+  #experience { background: var(--paper); }
+
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -3rem;
+    top: 0.4rem;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-left: -4.5px;
+  }
+
+  .timeline-dot.blue { background: var(--accent2); }
+
+  .exp-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .exp-company {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .exp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .exp-card {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .exp-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 40px; height: 40px;
+    background: var(--paper);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  .exp-bullets {
+    list-style: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    padding: 0.4rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    color: #444;
+    border-bottom: 1px solid #f0ebe0;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  .exp-initiatives {
+    background: #f0ebe0;
+    padding: 1rem 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .exp-initiatives h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.6rem;
+  }
+
+  .exp-initiatives ul {
+    list-style: none;
+  }
+
+  .exp-initiatives ul li {
+    font-size: 0.85rem;
+    color: #555;
+    padding: 0.25rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .exp-initiatives ul li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+    font-size: 0.5rem;
+    top: 0.35rem;
+  }
+
+  .highlight-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--accent2);
+    border-left: 3px solid var(--accent2);
+    padding: 0.8rem 1.2rem;
+    margin: 1rem 0;
+    background: #eef2f7;
+  }
+
+  /* PROJECTS / KEY ACHIEVEMENTS */
+  #achievements { background: #f0ebe0; }
+
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .ach-card {
+    background: var(--card-bg);
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+
+  .ach-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.1);
+  }
+
+  .ach-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent);
+  }
+
+  .ach-card:nth-child(2)::before { background: var(--accent2); }
+  .ach-card:nth-child(3)::before { background: #6b5b4e; }
+
+  .ach-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .ach-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .ach-desc {
+    font-size: 0.88rem;
+    color: #666;
+    line-height: 1.65;
+  }
+
+  .ach-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* EDUCATION */
+  #education { background: var(--paper); }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .edu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--rule);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(0,0,0,0.04);
+    position: absolute;
+    bottom: -1rem;
+    right: 1rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .edu-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-school {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-gpa {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent2);
+    font-weight: 500;
+  }
+
+  .cert-card {
+    background: var(--accent2);
+    border: 1px solid var(--accent2);
+    padding: 2.5rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-card .edu-label { color: rgba(255,255,255,0.6); }
+  .cert-card .edu-degree { color: white; font-size: 1.2rem; }
+  .cert-card .edu-school { color: rgba(255,255,255,0.7); }
+  .cert-card .edu-gpa { color: #88b8e8; }
+  .cert-card .edu-year { color: rgba(255,255,255,0.05); }
+
+  /* CONTACT / FOOTER */
+  #contact {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 6rem;
+  }
+
+  .contact-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 2rem;
+    letter-spacing: -0.03em;
+  }
+
+  .contact-title em { font-style: italic; color: var(--accent); }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid #222;
+  }
+
+  .contact-item {
+    text-align: left;
+  }
+
+  .contact-item-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 0.3rem;
+  }
+
+  .contact-item-value {
+    font-size: 0.95rem;
+    color: #ccc5b2;
+  }
+
+  .contact-item-value a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-item-value a:hover { color: var(--accent); }
+
+  footer-note {
+    display: block;
+    margin-top: 4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #444;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 6rem 2rem 2rem; }
+    .hero-right { padding: 2rem; }
+    .hero-stats-grid { grid-template-columns: 1fr 1fr; }
+    section { padding: 4rem 2rem; }
+    .achievements-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .contact-info { flex-direction: column; gap: 1.5rem; }
+    #contact { padding: 4rem 2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero-name { font-size: 3rem; }
+    .hero-cta { flex-direction: column; }
+    .hero-stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-num { font-size: 2rem; }
+    .timeline { padding-left: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Sri Ram Vishnu Perumal</span>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Highlights</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Senior Technical Writer · 9 Years</p>
+    <h1 class="hero-name">Sri Ram<br><em>Vishnu</em><br>Perumal</h1>
+    <p class="hero-role">Technical Documentation · eLearning · XML Authoring · Illustration</p>
+    <p class="hero-summary">Translating complex engineering concepts into clear, user-focused documentation. Expert in standards compliance (ISO, IEC, ANSI, IEEE) across aerospace, energy storage, and industrial engineering sectors.</p>
+    <div class="hero-cta">
+      <a href="#experience" class="btn-primary">View Experience</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">9+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Industries Served</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">17+</div>
+        <div class="stat-label">Trainees Mentored</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">15</div>
+        <div class="stat-label">Min vs 210-Page Manual</div>
+      </div>
+    </div>
+    <div class="hero-bg-text">TW</div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Technical Skills</h2>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-category">
+      <div class="skill-cat-label">Authoring & Writing</div>
+      <div class="skill-items">
+        <span>Madcap Flare</span><span>Arbortext Editor</span><span>TIM-XMAX</span><span>Confluence</span><span>Adobe FrameMaker</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-label">CMS & CCMS</div>
+      <div class="skill-items">
+        <span>Ultra CSDB</span><span>TIM-InfoManager</span><span>Windchill</span><span>GitHub</span><span>Adobe CC</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-label">eLearning & Video</div>
+      <div class="skill-items">
+        <span>Synthesia AI</span><span>Vyond AI</span><span>Adobe Captivate</span><span>Camtasia</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-label">Illustration & CAD</div>
+      <div class="skill-items">
+        <span>PTC Creo</span><span>Autodesk Inventor</span><span>Solidworks</span><span>Adobe Illustrator</span><span>IsoDraw 7.4</span><span>Snagit</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-label">Standards & Style</div>
+      <div class="skill-items">
+        <span>S1000d</span><span>STE</span><span>MSTP</span><span>iSpec2200</span><span>ATA 100</span><span>ISO / IEC / ANSI / IEEE</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-label">Tools & Workflows</div>
+      <div class="skill-items">
+        <span>JIRA</span><span>TortoiseSVN</span><span>SharePoint</span><span>Visio</span><span>draw.io</span><span>COMOS</span><span>DDLC</span><span>Agile</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Work Experience</h2>
+  </div>
+
+  <div class="timeline">
+
+    <!-- Fluence -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="exp-meta">
+        <span class="exp-date">Feb 2024 – Present</span>
+        <span class="exp-company">Fluence Energy · Bengaluru</span>
+      </div>
+      <div class="exp-title">Technical Writer</div>
+      <div class="exp-card">
+        <ul class="exp-bullets">
+          <li>Created and revised Technical Datasheets, Installation manuals, O&amp;M manuals, T&amp;R manuals, Transportation &amp; Handling Guidelines, Safety system guides, and SOPs for internal and customer-facing use.</li>
+          <li>Ensured timely documentation delivery for product launches (Gen6 Cube, GSP1000, GSP2000, GSP5000, Smartstack) amidst evolving design specs in a fast-paced agile environment.</li>
+          <li>Collaborated with cross-functional global teams including SMEs, engineering, and stakeholders to translate complex technical information into clear user-friendly content.</li>
+          <li>Led project-specific documentation and illustration through the Fluence Technical Bulletin (FTB) process for sustainable products.</li>
+        </ul>
+        <div class="exp-initiatives">
+          <h4>Initiatives</h4>
+          <ul>
+            <li>Self-trained with Synthesia and Vyond to create instructional video content.</li>
+            <li>Replaced Snagit with Adobe Illustrator and Isodraw for technical illustration — boosting visual consistency and production efficiency.</li>
+            <li>Created STE AI Agent in Copilot and Google space to automate document compliance with Simplified Technical English principles.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Milacron / Coperion -->
+    <div class="timeline-item">
+      <div class="timeline-dot blue"></div>
+      <div class="exp-meta">
+        <span class="exp-date">Jan 2021 – Feb 2024</span>
+        <span class="exp-company">Milacron India P Ltd (Coperion Project) · Coimbatore</span>
+      </div>
+      <div class="exp-title">Senior Technical Writer</div>
+      <div class="exp-card">
+        <ul class="exp-bullets">
+          <li>Led a high-performing team of two technical writers managing tasks, review, quality standards, and on-time delivery.</li>
+          <li>Created a video tutorial for the Ceramic Rotary Valve — reducing engineer learning time from a 210-page manual to just 15 minutes.</li>
+          <li>Served as document controller organizing approved operation manuals, supplier documentation, mechanical and electrical drawings for end-customer delivery.</li>
+          <li>Maintained XML information templates ensuring adherence to document standards and easy data migration from MS Word and PDF.</li>
+          <li>Conducted training sessions for new hires on Workflow, Supplier documentation, TIM XML, STE, and Video tutorial processes.</li>
+          <li>Supported internal project team in COMOS; served as On-site coordinator in Houston, Texas (Sep–Dec 2022).</li>
+        </ul>
+        <div class="highlight-quote">
+          "Capturing very fast the tasks to be executed and delivering always the results as expected… I would be glad to have you back in the team in Houston again." — Coperion US Team
+        </div>
+        <div class="exp-initiatives">
+          <h4>Initiatives</h4>
+          <ul>
+            <li>Implemented operation manual standardization — significant time saving and elimination of outsourcing requirement.</li>
+            <li>Implemented Simplified Technical English (STE) across all Operation manuals.</li>
+            <li>Created comprehensive workflow for Operation manual, Illustration, and Video tutorials.</li>
+            <li>Developed quality checklist and guidelines for Operation manual and video tutorial production.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alten -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="exp-meta">
+        <span class="exp-date">Sep 2019 – Dec 2020</span>
+        <span class="exp-company">Alten India P Ltd · Bengaluru</span>
+      </div>
+      <div class="exp-title">Consultant & Engineer</div>
+      <div class="exp-card">
+        <ul class="exp-bullets">
+          <li>Created and revised Illustrated Parts Catalogues (IPC) in compliance with technical specifications for Airbus operator.</li>
+          <li>Processed impact analysis from manufacture inputs (MPM, SB, COC, RFR) for configuration management.</li>
+          <li>Served as JIRA coordinator; created and revised illustration mark-ups.</li>
+          <li>Conducted business development research, content development, and mapping for business prospective meetings.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Lionbridge -->
+    <div class="timeline-item">
+      <div class="timeline-dot blue"></div>
+      <div class="exp-meta">
+        <span class="exp-date">Mar 2017 – Sep 2019</span>
+        <span class="exp-company">Lionbridge Technologies LLP · Chennai</span>
+      </div>
+      <div class="exp-title">Technical Writer</div>
+      <div class="exp-card">
+        <ul class="exp-bullets">
+          <li>Created and revised technical manuals across aerospace and marine projects adhering to STE, S1000d, iSpec2200, ATA 100 standards.</li>
+          <li>Analyzed engineering drawings, GD&amp;T, fitting instructions, service bulletins, RMRs, and 3D models in JT2go.</li>
+          <li>Trained a team of 17 trainees for the BR700NG Cleaning and Inspection manual project.</li>
+          <li>Projects: BR700NG, RB3043, TRENT XWB, TRENT TEN, CLE, Marine (Kokkola, Power box, Renk, Turku).</li>
+        </ul>
+        <div class="exp-initiatives">
+          <h4>Achievement</h4>
+          <ul>
+            <li>🏆 Spot Award for high production and quality — Q2 2019</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- KEY ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Key Highlights</h2>
+  </div>
+
+  <div class="achievements-grid">
+    <div class="ach-card">
+      <span class="ach-icon">🎬</span>
+      <h3 class="ach-title">210 Pages → 15 Minutes</h3>
+      <p class="ach-desc">Produced a video tutorial for the Ceramic Rotary Valve that compressed a 210-page installation manual into a 15-minute instructional video for EU and US maintenance engineers — dramatically reducing ramp-up time.</p>
+      <span class="ach-tag">Milacron / Coperion · 2021</span>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">🤖</span>
+      <h3 class="ach-title">STE AI Agent</h3>
+      <p class="ach-desc">Built a Simplified Technical English AI Agent in Copilot and Google Workspace to automate compliance checks — improving documentation quality at scale without manual review overhead.</p>
+      <span class="ach-tag">Fluence Energy · 2024</span>
+    </div>
+    <div class="ach-card">
+      <span class="ach-icon">✈️</span>
+      <h3 class="ach-title">Aerospace Standard Compliance</h3>
+      <p class="ach-desc">Authored and revised manuals across six major aerospace engine programs (BR700NG, TRENT XWB, TRENT TEN, RB3043, CLE, Marine) in full compliance with S1000d, ATA 100, and iSpec2200 standards.</p>
+      <span class="ach-tag">Lionbridge · 2017–2019</span>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <div class="section-rule"></div>
+    <h2 class="section-title">Education & Credentials</h2>
+  </div>
+
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-label">Bachelor of Engineering</div>
+      <div class="edu-degree">Aeronautical Engineering</div>
+      <div class="edu-school">Hindustan University, Chennai</div>
+      <div class="edu-gpa">7.0 CGPA · 2010 – 2014</div>
+      <div class="edu-year">2014</div>
+    </div>
+    <div class="cert-card">
+      <div class="edu-label">Certification</div>
+      <div class="edu-degree">US Visa B1/B2</div>
+      <div class="edu-school">Valid through February 2036</div>
+      <div class="edu-gpa">On-site ready for US client engagements</div>
+      <div class="edu-year">'36</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="contact-eyebrow">Open to Opportunities</p>
+  <h2 class="contact-title">Let's <em>work</em><br>together.</h2>
+  <p style="color:#888; font-size:0.95rem; max-width:500px; margin:0 auto;">Available for senior technical writing roles, documentation strategy, and eLearning content development — on-site or remote.</p>
+
+  <div class="contact-info">
+    <div class="contact-item">
+      <div class="contact-item-label">Email</div>
+      <div class="contact-item-value"><a href="mailto:sriram.vishnu1@gmail.com">sriram.vishnu1@gmail.com</a></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">Phone</div>
+      <div class="contact-item-value"><a href="tel:+919791482572">+91-97914 82572</a></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">Location</div>
+      <div class="contact-item-value">Bengaluru, India</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">Availability</div>
+      <div class="contact-item-value">Open to Opportunities</div>
+    </div>
+  </div>
+
+  <footer-note>© 2026 Sri Ram Vishnu Perumal · Senior Technical Writer</footer-note>
+</section>
+
+<script>
+  // Scroll reveal for timeline items
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 120);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+  // Smooth active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--accent)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
